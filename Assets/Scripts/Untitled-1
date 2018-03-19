@@ -1,0 +1,67 @@
+private Animator anim;
+    private string jumpAnimationTrigger = "jump";
+	private string shootingAnimationTrigger = "shooting";
+	private string runAnimationTrigger = "run";
+	private string walkAnimationTrigger = "walk";
+
+	public bool clickLeft = false;
+	public bool clickRight = false;
+    public bool isRuning = false;
+    public bool isWalking = false;
+    public bool isShooting = false;
+    public bool isJumping = false;
+
+    private Vector3 currPos;
+    private float walkVelocity = 0.03f;
+    private float runVelocity = 0.07f;
+   
+
+	// Use this for initialization
+	void Start () {
+		anim = this.GetComponent<Animator>();
+	}
+
+
+	
+	// Update is called once per frame
+	void Update () {
+		handleAnimation();
+	}
+
+	void FixedUpdate() {
+		
+	}
+
+	void handleAnimation() {
+		if (isRuning) {
+			anim.SetTrigger(runAnimationTrigger);
+		} else if (isWalking) {
+			anim.SetTrigger(walkAnimationTrigger);
+		} else if (isShooting) {
+			anim.SetTrigger(shootingAnimationTrigger);
+		} else if (isJumping) {
+			anim.SetTrigger(jumpAnimationTrigger);
+		}
+	}
+
+	public void goLeft() {
+		currPos = this.transform.position;
+		if (isRuning) {
+			currPos.x -= runVelocity;
+		    this.transform.position = currPos;
+		} else {
+			currPos.x -= walkVelocity;
+		    this.transform.position = currPos;
+		}
+	}
+
+	public void goRight() {
+		currPos = this.transform.position;
+		if (isRuning) {
+			currPos.x += runVelocity;
+		    this.transform.position = currPos;
+		} else {
+			currPos.x += walkVelocity;
+		    this.transform.position = currPos;
+		}
+	}
